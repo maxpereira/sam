@@ -23,9 +23,13 @@ LFLAGS_SAM =  $(LFLAGS) `sdl-config --libs`
 BINS=bin/recite bin/parse1 bin/parser
 all: bin/sam $(BINS)
 
+obj/main.o: src/main.c
+	@mkdir -p $(dir $@)
+	$(CC) $(CFLAGS_SAM) -c $< -o $@
+
 bin/sam: $(OBJS) obj/main.o
 	@mkdir -p $(dir $@)
-	$(CC) -o $@ obj/main.o $(OBJS) $(CFLAGS_SAM) $(LFLAGS_SAM)
+	$(CC) -o $@ obj/main.o $(OBJS) $(LFLAGS_SAM)
 
 $(BINS): bin/%: obj/$(notdir %).o $(OBJS)
 	@mkdir -p $(dir $@)
