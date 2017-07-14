@@ -72,3 +72,21 @@ void PrintRule(int offset)
 	} while ((A&128)==0);
 	printf("\n");
 }
+
+void printArray(char *name, unsigned char *array, int last)
+{
+	printf("    \"%s\": [\n", name);
+	printf("        ");
+	int i = 0;
+	while((i < last)) {
+		printf("%d", array[i]);
+		if (i<last - 1) {
+			printf(", ");
+			if (!((i+1) % 16)) {
+				printf("\n        ");
+			}
+		}
+		i++;
+	}
+	printf("\n    ],\n");
+}

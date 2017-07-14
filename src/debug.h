@@ -13,5 +13,6 @@ void PrintOutput(
 	unsigned char *p);
 
 void PrintRule(int offset);
+void printArray(char *name, unsigned char *array, int last);
 
 #endif

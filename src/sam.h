@@ -14,6 +14,7 @@ int SAMMain();
 char* GetBuffer();
 int GetBufferLength();
 
+int Parser1();
 
 //char input[]={"/HAALAOAO MAYN NAAMAEAE IHSTT SAEBAASTTIHAAN \x9b\x9b\0"};
 //unsigned char input[]={"/HAALAOAO \x9b\0"};
