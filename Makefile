@@ -20,7 +20,7 @@ LFLAGS_SAM =  $(LFLAGS) `sdl-config --libs`
 .PHONY: clean all dirs
 
 # sam is special, as it uses main.c :/
-BINS=bin/recite bin/parse1 bin/parser
+BINS=bin/recite bin/parse1 bin/parser bin/render-dump
 all: bin/sam $(BINS)
 
 obj/main.o: src/main.c
