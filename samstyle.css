@@ -29,8 +29,16 @@ textarea {
 label { width: 20%; }
 input[type="range"] { width: 61%; }
 
-.hbtn { width: 50%; }
-.fbtn { width: 100%; }
+.hbtn { width: 50%; margin-top: 5px; }
+.fbtn { width: 100%; margin-top: 5px; }
+
+#footer, #footer a:link, #footer a:visited {
+  color: #666;
+}
+
+#footer a:hover {
+  color: #ccc;
+}
 
 a:link {
   color: #00FF00;

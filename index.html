@@ -68,7 +68,7 @@ function setOpts(spd, pth, mth, thr) {
 <hr>
 <form id="playground">
   <div>
-	<textarea id="speechinput" name="textfield" rows="10" cols="60"></textarea>
+	<textarea id="speechinput" name="textfield" rows="10" cols="60">Hello, my name is SAM, which stands for Software Automatic Mouth.</textarea>
 
     <input type="submit" class="btn hbtn" name="Text 1" value="Say"><input type="button" class="btn hbtn" onclick="document.getElementById('speechinput').value='';" value="Clear">
   <hr>
@@ -84,12 +84,22 @@ function setOpts(spd, pth, mth, thr) {
 	<label for="throat">Throat</label>	
     <input type="range" id="throat" min="0" max="255" />
 	<input type="number" id="throat-lbl" min="0" max="255" />
-	<input type="button" class="btn fbtn" onclick="setOpts(72, 64, 128, 128);" value="Reset">
   </div>
 </form>
 <hr>
 <center>
+	<a href="javascript:void(0);" onclick="setOpts(72,64,110,160)">Elf</a> | 
+	<a href="javascript:void(0);" onclick="setOpts(92,60,190,190)">Little Robot</a> | 
+	<a href="javascript:void(0);" onclick="setOpts(82,72,110,105)">Stuffy Guy</a> | 
+	<a href="javascript:void(0);" onclick="setOpts(82,32,145,145)">Little Old Lady</a> | 
+	<a href="javascript:void(0);" onclick="setOpts(100,64,150,200)">Extra-Terrestrial</a>
+	<input type="button" class="btn fbtn" onclick="setOpts(72, 64, 128, 128);" value="Reset">	
+</center>
+<hr>
+<div id="footer">
+<center>
 	<a href="https://github.com/maxpereira/sam">Repo</a> (Forked from <a href="https://github.com/discordier/sam">discordier</a>) | <a href="./about.html">What is SAM?</a>
 </center>
+</div>
 </body>
 </html>
