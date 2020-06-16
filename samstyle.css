@@ -14,10 +14,14 @@ label, input {
   display: inline-block;
 }
 
+textarea {
+  width: 449px;
+}
+
 label { width: 30%}
-input { width: 60%}
-input[type="submit"] { width: 100%;}
-input[type="range"] { transform: rotate(180deg);}
+input[type="submit"] { width: 50%; }
+input[type="button"] { width: 50%; }
+input[type="range"] { width: 60%; }
 
 a:link {
   color: #00FF00;
