@@ -10,12 +10,13 @@
 <script src="dist/samjs.js"></script>
 <script>
   opts = {
-    debug: 1,
+    debug: 0,
     pitch: 64,
     speed: 72,
     mouth: 128,
     throat: 128
   };
+
   document.addEventListener('DOMContentLoaded', function() {
     ['speed', 'pitch', 'mouth', 'throat'].forEach(
       (name) => {
@@ -27,6 +28,18 @@
         e.value = opts[name];
       }
     );
+    ['speed-lbl', 'pitch-lbl', 'mouth-lbl', 'throat-lbl'].forEach(
+      (name) => {
+        var e = document.getElementById(name);
+        e.onchange = function (e) {
+		  str = e.target.id.slice(0, -4);
+          opts[str] = 255 - e.target.value;
+		  console.info(str);
+          document.getElementById(str).value = 255 - e.target.value;
+        };
+        e.value = opts[name];
+      }
+    );	
     document.getElementById('playground').addEventListener('submit', function (e) {
       e.preventDefault();
       var s = new SamJs(opts);
@@ -43,17 +56,17 @@
     <input type="submit" name="Text 1" value="Say"><input type="button" onclick="document.getElementById('speechinput').value='';" value="Clear">
   <hr>
 	<label for="pitch">Pitch</label>
-    <input type="range" id="pitch" min="0" max="255" value="0" />
-	<input type="number" id="pitch-lbl" min="1" max="255"><br>
+    <input type="range" id="pitch" min="0" max="255" />
+	<input type="number" id="pitch-lbl" min="1" max="255" /><br>
 	<label for="speed">Speed</label>	
-    <input type="range" id="speed" min="1" max="255" value="0" />
-	<input type="number" id="speed-lbl" min="1" max="255"><br>
+    <input type="range" id="speed" min="1" max="255" />
+	<input type="number" id="speed-lbl" min="1" max="255" /><br>
 	<label for="mouth">Mouth</label>	
-    <input type="range" id="mouth" min="0" max="255" value="0" />
-	<input type="number" id="mouth-lbl" min="1" max="255"><br>
+    <input type="range" id="mouth" min="0" max="255" />
+	<input type="number" id="mouth-lbl" min="1" max="255" /><br>
 	<label for="throat">Throat</label>	
-    <input type="range" id="throat" min="0" max="255" value="0" />
-	<input type="number" id="throat-lbl" min="1" max="255">
+    <input type="range" id="throat" min="0" max="255" />
+	<input type="number" id="throat-lbl" min="1" max="255" />
   </div>
 </form>
 <hr>
