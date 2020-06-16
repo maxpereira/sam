@@ -22,7 +22,7 @@
         var e = document.getElementById(name);
         e.onchange = function (e) {
           opts[e.target.id] = 255 - e.target.value;
-          document.getElementById(e.target.id + '-lbl').value = e.target.value;
+          document.getElementById(e.target.id + '-lbl').value = 255 - e.target.value;
         };
         e.value = 255 - opts[name];
       }
@@ -32,11 +32,10 @@
         var e = document.getElementById(name);
         e.onchange = function (e) {
 		  str = e.target.id.slice(0, -4);
-          opts[str] = 255 - e.target.value;
-		  console.info(str);
-          document.getElementById(str).value = e.target.value;
+          opts[str] = e.target.value;
+          document.getElementById(str).value = 255 - e.target.value;
         };
-        e.value = 255 - opts[name.slice(0, -4)];
+        e.value = opts[name.slice(0, -4)];
       }
     );	
     document.getElementById('playground').addEventListener('submit', function (e) {
@@ -46,22 +45,22 @@
     });
   });
 
-function setOpts(pth, spd, mth, thr) {
+function setOpts(spd, pth, mth, thr) {
 	var newPitch = 255 - pth;
 	document.getElementById('pitch').value = newPitch;
-	document.getElementById('pitch-lbl').value = newPitch;
+	document.getElementById('pitch-lbl').value = pth;
 	opts['pitch'] = pth;
 	var newSpeed = 255 - spd;
 	document.getElementById('speed').value = newSpeed;
-	document.getElementById('speed-lbl').value = newSpeed;
+	document.getElementById('speed-lbl').value = spd;
 	opts['speed'] = spd;
 	var newMouth = 255 - mth;	
 	document.getElementById('mouth').value = newMouth;
-	document.getElementById('mouth-lbl').value = newMouth;
+	document.getElementById('mouth-lbl').value = mth;
 	opts['mouth'] = mth;
 	var newThroat = 255 - thr;
 	document.getElementById('throat').value = newThroat;
-	document.getElementById('throat-lbl').value = newThroat;
+	document.getElementById('throat-lbl').value = thr;
 	opts['throat'] = thr;
 }
 </script>
@@ -73,19 +72,19 @@ function setOpts(pth, spd, mth, thr) {
 
     <input type="submit" class="btn hbtn" name="Text 1" value="Say"><input type="button" class="btn hbtn" onclick="document.getElementById('speechinput').value='';" value="Clear">
   <hr>
-	<label for="pitch">Pitch</label>
-    <input type="range" id="pitch" min="0" max="255" />
-	<input type="number" id="pitch-lbl" min="1" max="255" /><br>
 	<label for="speed">Speed</label>	
     <input type="range" id="speed" min="1" max="255" />
 	<input type="number" id="speed-lbl" min="1" max="255" /><br>
+	<label for="pitch">Pitch</label>
+    <input type="range" id="pitch" min="0" max="255" />
+	<input type="number" id="pitch-lbl" min="1" max="255" /><br>
 	<label for="mouth">Mouth</label>	
     <input type="range" id="mouth" min="0" max="255" />
 	<input type="number" id="mouth-lbl" min="1" max="255" /><br>
 	<label for="throat">Throat</label>	
     <input type="range" id="throat" min="0" max="255" />
 	<input type="number" id="throat-lbl" min="1" max="255" />
-	<input type="button" class="btn fbtn" onclick="setOpts(64, 72, 128, 128);" value="Reset">
+	<input type="button" class="btn fbtn" onclick="setOpts(72, 64, 128, 128);" value="Reset">
   </div>
 </form>
 <hr>
