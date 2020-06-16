@@ -5,7 +5,6 @@
   <title>SAM: Software Automatic Mouth</title>
 	<link rel="stylesheet" href="samstyle.css">
 </head>
-<body>
 <h1>Software Automatic Mouth</h1>
 <script src="dist/samjs.js"></script>
 <script>
@@ -25,7 +24,7 @@
           opts[e.target.id] = 255 - e.target.value;
           document.getElementById(e.target.id + '-lbl').value = e.target.value;
         };
-        e.value = opts[name];
+        e.value = 255 - opts[name];
       }
     );
     ['speed-lbl', 'pitch-lbl', 'mouth-lbl', 'throat-lbl'].forEach(
@@ -37,7 +36,7 @@
 		  console.info(str);
           document.getElementById(str).value = 255 - e.target.value;
         };
-        e.value = opts[name];
+        e.value = 255 - opts[name.slice(0, -4)];
       }
     );	
     document.getElementById('playground').addEventListener('submit', function (e) {
@@ -46,6 +45,7 @@
       s.speak(this.textfield.value);
     });
   });
+
 </script>
 
 <hr>
