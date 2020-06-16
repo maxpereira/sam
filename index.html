@@ -16,6 +16,8 @@
     throat: 128
   };
 
+  var dlFlag = false;
+
   document.addEventListener('DOMContentLoaded', function() {
     ['speed', 'pitch', 'mouth', 'throat'].forEach(
       (name) => {
@@ -41,8 +43,13 @@
     document.getElementById('playground').addEventListener('submit', function (e) {
       e.preventDefault();
       var s = new SamJs(opts);
-      s.speak(this.textfield.value);
+	  s.speak(this.textfield.value);
     });
+    document.getElementById('btndl').addEventListener('click', function (e) {
+      e.preventDefault();
+      var s = new SamJs(opts);
+	  s.download(document.getElementById('speechinput').value);
+    });	
   });
 
 function setOpts(spd, pth, mth, thr) {
@@ -88,12 +95,13 @@ function setOpts(spd, pth, mth, thr) {
 </form>
 <hr>
 <center>
-	<a href="javascript:void(0);" onclick="setOpts(72,64,110,160)">Elf</a> | 
-	<a href="javascript:void(0);" onclick="setOpts(92,60,190,190)">Little Robot</a> | 
-	<a href="javascript:void(0);" onclick="setOpts(82,72,110,105)">Stuffy Guy</a> | 
-	<a href="javascript:void(0);" onclick="setOpts(82,32,145,145)">Little Old Lady</a> | 
-	<a href="javascript:void(0);" onclick="setOpts(100,64,150,200)">Extra-Terrestrial</a>
-	<input type="button" class="btn fbtn" onclick="setOpts(72, 64, 128, 128);" value="Reset to Default">	
+	<a href="javascript:void(0);" onclick="setOpts(72, 64, 110, 160)">Elf</a> | 
+	<a href="javascript:void(0);" onclick="setOpts(92, 60, 190, 190)">Little Robot</a> | 
+	<a href="javascript:void(0);" onclick="setOpts(82, 72, 110, 105)">Stuffy Guy</a> | 
+	<a href="javascript:void(0);" onclick="setOpts(82, 32, 145, 145)">Little Old Lady</a> | 
+	<a href="javascript:void(0);" onclick="setOpts(100, 64, 150, 200)">Extra-Terrestrial</a>
+	<input type="button" class="btn fbtn" onclick="setOpts(72, 64, 128, 128);" value="Reset to Default">
+	<input type="button" class="btn fbtn" id="btndl" onclick="dlFlag = true;" value="Download WAV">
 </center>
 <hr>
 <div id="footer">
