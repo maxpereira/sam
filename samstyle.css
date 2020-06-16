@@ -1,0 +1,36 @@
+body {
+  background-color: black;
+  color: white;
+  max-width: 12cm;
+  margin: 0 auto;
+  font-family: sans-serif;
+}
+
+h1, h2 {
+  text-align: center;
+}
+
+label, input {
+  display: inline-block;
+}
+
+label { width: 30%}
+input { width: 60%}
+input[type="submit"] { width: 100%;}
+input[type="range"] { transform: rotate(180deg);}
+
+a:link {
+  color: #00FF00;
+}
+
+a:visited {
+  color: #00FF00;
+}
+
+a:hover {
+  color: hotpink;
+}
+
+a:active {
+  color: blue;
+}
