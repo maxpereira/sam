@@ -14,7 +14,7 @@ label, input {
   display: inline-block;
 }
 
-.btn, input[type="number"] {
+input[type="number"] {
   background-color: #252322;
   color: white;	
 }
@@ -29,11 +29,39 @@ textarea {
 label { width: 20%; }
 input[type="range"] { width: 61%; }
 
-.hbtn { width: 50%; margin-top: 5px; }
+.hbtn1 { width: 49%; margin-top: 4px; margin-right: 5px; }
+.hbtn2 { width: 49%; margin-top: 4px; margin-left: 4px; }
 .fbtn { width: 100%; margin-top: 5px; }
+
+.btn:focus {
+  outline: none;
+  box-shadow: none;
+}
 
 #footer, #footer a:link, #footer a:visited {
   color: #666;
+}
+
+.btn:hover {
+  background-color: #454545;
+  cursor: pointer;
+}
+
+.btn:active {
+  background-color: #4d4d4d;
+  cursor: pointer;
+}
+
+.btn {
+  background-color: #292828;
+  border: none;
+  border-radius: 8px;
+  color: white;
+  padding: 10px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
 }
 
 #footer a:hover {
