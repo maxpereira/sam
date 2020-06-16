@@ -16,7 +16,7 @@
     throat: 128
   };
 
-  var dlFlag = false;
+  var phonemeInput = false;
 
   document.addEventListener('DOMContentLoaded', function() {
     ['speed', 'pitch', 'mouth', 'throat'].forEach(
@@ -43,12 +43,27 @@
     document.getElementById('playground').addEventListener('submit', function (e) {
       e.preventDefault();
       var s = new SamJs(opts);
-	  s.speak(this.textfield.value);
+	  if (phonemeInput == true) {
+		s.speak(this.textfield.value, true);	  
+	  } else if (phonemeInput == false) {
+		s.speak(this.textfield.value)
+	  }
     });
     document.getElementById('btndl').addEventListener('click', function (e) {
       e.preventDefault();
       var s = new SamJs(opts);
-	  s.download(document.getElementById('speechinput').value);
+	  if (phonemeInput == true) {
+		s.download(document.getElementById('speechinput').value, true);	  
+	  } else if (phonemeInput == false) {
+		s.download(document.getElementById('speechinput').value)
+	  }	  
+    });
+	document.getElementById('chkBox').addEventListener('click', function (e) {
+      if (phonemeInput == false) {
+		phonemeInput = true;
+	  } else if (phonemeInput == true) {
+		phonemeInput = false;
+	  }
     });	
   });
 
@@ -79,16 +94,16 @@ function setOpts(spd, pth, mth, thr) {
 
     <input type="submit" class="btn hbtn1" name="Text 1" value="Say"><input type="button" class="btn hbtn2" onclick="document.getElementById('speechinput').value='';" value="Clear">
   <hr>
-	<label for="speed">Speed</label>	
+	<label for="speed" class="sliderLbl">Speed</label>	
     <input type="range" id="speed" min="0" max="254" />
 	<input type="number" id="speed-lbl" min="1" max="255" /><br>
-	<label for="pitch">Pitch</label>
+	<label for="pitch" class="sliderLbl">Pitch</label>
     <input type="range" id="pitch" min="0" max="255" />
 	<input type="number" id="pitch-lbl" min="0" max="255" /><br>
-	<label for="mouth">Mouth</label>	
+	<label for="mouth" class="sliderLbl">Mouth</label>	
     <input type="range" id="mouth" min="0" max="255" />
 	<input type="number" id="mouth-lbl" min="0" max="255" /><br>
-	<label for="throat">Throat</label>	
+	<label for="throat" class="sliderLbl">Throat</label>	
     <input type="range" id="throat" min="0" max="255" />
 	<input type="number" id="throat-lbl" min="0" max="255" />
   </div>
@@ -100,6 +115,10 @@ function setOpts(spd, pth, mth, thr) {
 	<a href="javascript:void(0);" onclick="setOpts(82, 72, 110, 105)">Stuffy Guy</a> | 
 	<a href="javascript:void(0);" onclick="setOpts(82, 32, 145, 145)">Little Old Lady</a> | 
 	<a href="javascript:void(0);" onclick="setOpts(100, 64, 150, 200)">Extra-Terrestrial</a>
+	<hr>
+	<input type="checkbox" id="chkBox">
+	<label for="chkBox">Raw Phoneme Input</label><br>
+	<hr>
 	<input type="button" class="btn fbtn" onclick="setOpts(72, 64, 128, 128);" value="Reset to Default">
 	<input type="button" class="btn fbtn" id="btndl" onclick="dlFlag = true;" value="Download WAV">
 </center>

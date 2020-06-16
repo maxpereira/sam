@@ -26,7 +26,7 @@ textarea {
   resize: none;
 }
 
-label { width: 20%; }
+.sliderLbl { width: 20%; }
 input[type="range"] { width: 61%; }
 
 .hbtn1 { width: 49%; margin-top: 4px; margin-right: 5px; }
