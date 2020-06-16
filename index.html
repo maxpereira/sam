@@ -8,7 +8,7 @@
 <h1>Software Automatic Mouth</h1>
 <script src="dist/samjs.js"></script>
 <script>
-  opts = {
+  var opts = {
     debug: 0,
     pitch: 64,
     speed: 72,
@@ -46,6 +46,24 @@
     });
   });
 
+function setOpts(pth, spd, mth, thr) {
+	var newPitch = 255 - pth;
+	document.getElementById('pitch').value = newPitch;
+	document.getElementById('pitch-lbl').value = newPitch;
+	opts['pitch'] = pth;
+	var newSpeed = 255 - spd;
+	document.getElementById('speed').value = newSpeed;
+	document.getElementById('speed-lbl').value = newSpeed;
+	opts['speed'] = spd;
+	var newMouth = 255 - mth;	
+	document.getElementById('mouth').value = newMouth;
+	document.getElementById('mouth-lbl').value = newMouth;
+	opts['mouth'] = mth;
+	var newThroat = 255 - thr;
+	document.getElementById('throat').value = newThroat;
+	document.getElementById('throat-lbl').value = newThroat;
+	opts['throat'] = thr;
+}
 </script>
 
 <hr>
@@ -53,7 +71,7 @@
   <div>
 	<textarea id="speechinput" name="textfield" rows="10" cols="60"></textarea>
 
-    <input type="submit" name="Text 1" value="Say"><input type="button" onclick="document.getElementById('speechinput').value='';" value="Clear">
+    <input type="submit" class="hbtn" name="Text 1" value="Say"><input type="button" class="hbtn" onclick="document.getElementById('speechinput').value='';" value="Clear">
   <hr>
 	<label for="pitch">Pitch</label>
     <input type="range" id="pitch" min="0" max="255" />
@@ -67,6 +85,7 @@
 	<label for="throat">Throat</label>	
     <input type="range" id="throat" min="0" max="255" />
 	<input type="number" id="throat-lbl" min="1" max="255" />
+	<input type="button" class="fbtn" onclick="setOpts(64, 72, 128, 128);" value="Reset">
   </div>
 </form>
 <hr>
