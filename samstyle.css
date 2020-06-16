@@ -14,8 +14,15 @@ label, input {
   display: inline-block;
 }
 
+.btn, input[type="number"] {
+  background-color: #252322;
+  color: white;	
+}
+
 textarea {
   width: 449px;
+  background-color: #252322;
+  color: white;
 }
 
 label { width: 20%; }
