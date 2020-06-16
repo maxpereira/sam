@@ -21,9 +21,8 @@
       (name) => {
         var e = document.getElementById(name);
         e.onchange = function (e) {
-          opts[e.target.id] = e.target.value;
-          document.getElementById(e.target.id + '-lbl').innerText =
-            e.target.id.charAt(0).toUpperCase() + e.target.id.substr(1) + ': ' + e.target.value;
+          opts[e.target.id] = 255 - e.target.value;
+          document.getElementById(e.target.id + '-lbl').value = e.target.value;
         };
         e.value = opts[name];
       }
@@ -43,10 +42,18 @@
 
     <input type="submit" name="Text 1" value="Say"><input type="button" onclick="document.getElementById('speechinput').value='';" value="Clear">
   <hr>
-    <label id="pitch-lbl" for="pitch">Pitch:   </label><input type="range" id="pitch" min="0" max="255" value="0" />
-    <label id="speed-lbl" for="speed">Speed:   </label><input type="range" id="speed" min="1" max="255" value="0" />
-    <label id="mouth-lbl" for="mouth">Mouth:   </label><input type="range" id="mouth" min="0" max="255" value="0" />
-    <label id="throat-lbl" for="throat">Throat: </label><input type="range" id="throat" min="0" max="255" value="0" />
+	<label for="pitch">Pitch</label>
+    <input type="range" id="pitch" min="0" max="255" value="0" />
+	<input type="number" id="pitch-lbl" min="1" max="255"><br>
+	<label for="speed">Speed</label>	
+    <input type="range" id="speed" min="1" max="255" value="0" />
+	<input type="number" id="speed-lbl" min="1" max="255"><br>
+	<label for="mouth">Mouth</label>	
+    <input type="range" id="mouth" min="0" max="255" value="0" />
+	<input type="number" id="mouth-lbl" min="1" max="255"><br>
+	<label for="throat">Throat</label>	
+    <input type="range" id="throat" min="0" max="255" value="0" />
+	<input type="number" id="throat-lbl" min="1" max="255">
   </div>
 </form>
 <hr>

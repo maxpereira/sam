@@ -18,10 +18,11 @@ textarea {
   width: 449px;
 }
 
-label { width: 30%}
+label { width: 20%; }
+input[type="range"] { width: 61%; }
 input[type="submit"] { width: 50%; }
 input[type="button"] { width: 50%; }
-input[type="range"] { width: 60%; }
+
 
 a:link {
   color: #00FF00;
