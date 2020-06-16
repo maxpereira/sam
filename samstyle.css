@@ -23,6 +23,7 @@ textarea {
   width: 449px;
   background-color: #252322;
   color: white;
+  resize: none;
 }
 
 label { width: 20%; }
