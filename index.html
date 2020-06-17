@@ -50,13 +50,19 @@
       e.preventDefault();
 	  
 	  str = document.getElementById('speechinput').value;
+
 	  if (str.includes("(") && str.includes(")")) {
+	  	if ((str.charAt(0) == '(') && ((str.charAt(str.length-1) == ')'))) {
+			parseInputText(1);
+			return;
+		}
 		var msg = confirm("Due to limitations of the SamJS library, downloaded wave files can only be entirely English input or entirely phonetic input. The input can be split into multiple wave files, following this rule. You will have to use another software program such as Audacity to combine them into one continuous audio file.\n\n\nPress OK to continue with the download, or Cancel to abort.");
 		if (msg == false) {
 			return;
 		}
+	  } else {
+		parseInputText(1);
 	  }
-	  parseInputText(1);
     });
   });
 
