@@ -16,7 +16,6 @@
     throat: 128
   };
 
-  var phonemeInput = false;
   var lines = [];
   var line = 0;
 
@@ -52,21 +51,13 @@
 	  
 	  str = document.getElementById('speechinput').value;
 	  if (str.includes("(") && str.includes(")")) {
-		var msg = confirm("Due to limitations of the SamJS library, downloaded wave files can only be entirely English input or entirely Phoneme input. The input can be split into multiple wave files, following this rule. You will have to use another software program such as Audacity to combine them into one continuous audio file.\n\n\nPress OK to continue with the download, or Cancel to abort.");
-		if (msg == true) {
-			parseInputText(1);
-		} else {
+		var msg = confirm("Due to limitations of the SamJS library, downloaded wave files can only be entirely English input or entirely phonetic input. The input can be split into multiple wave files, following this rule. You will have to use another software program such as Audacity to combine them into one continuous audio file.\n\n\nPress OK to continue with the download, or Cancel to abort.");
+		if (msg == false) {
 			return;
 		}
-	  } 
-    });
-	document.getElementById('chkBox').addEventListener('click', function (e) {
-      if (phonemeInput == false) {
-		phonemeInput = true;
-	  } else if (phonemeInput == true) {
-		phonemeInput = false;
 	  }
-    });	
+	  parseInputText(1);
+    });
   });
 
 function parseInputText(dlFlag) {
@@ -158,7 +149,10 @@ function setOpts(spd, pth, mth, thr) {
 	opts['throat'] = thr;
 }
 </script>
-
+<hr>
+<center>
+	<p>Type your desired text into the input box below.<br>Wrap <a href="https://github.com/maxpereira/sam/blob/master/docs/manual.md#phonetic-input-to-sam">phonetic input</a> in parentheses.</p>
+</center>	
 <hr>
 <form id="playground">
   <div>
@@ -187,9 +181,6 @@ function setOpts(spd, pth, mth, thr) {
 	<a href="javascript:void(0);" onclick="setOpts(82, 72, 110, 105)">Stuffy Guy</a> | 
 	<a href="javascript:void(0);" onclick="setOpts(82, 32, 145, 145)">Little Old Lady</a> | 
 	<a href="javascript:void(0);" onclick="setOpts(100, 64, 150, 200)">Extra-Terrestrial</a>
-	<hr>
-	<input type="checkbox" id="chkBox">
-	<label for="chkBox">Raw Phoneme Input (<a href="https://github.com/maxpereira/sam/blob/master/docs/manual.md#phonetic-input-to-sam">See Manual</a>)</label><br>
 	<hr>
 	<input type="button" class="btn fbtn" onclick="setOpts(72, 64, 128, 128);" value="Reset to Default">
 	<input type="button" class="btn fbtn" id="btndl" onclick="dlFlag = true;" value="Download WAV">
