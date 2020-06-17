@@ -17,6 +17,7 @@
   };
 
   var phonemeInput = false;
+  var lines = [];
 
   document.addEventListener('DOMContentLoaded', function() {
     ['speed', 'pitch', 'mouth', 'throat'].forEach(
@@ -43,17 +44,24 @@
     document.getElementById('playground').addEventListener('submit', function (e) {
       e.preventDefault();
       var s = new SamJs(opts);
-	  if (phonemeInput == true) {
-		s.speak(this.textfield.value, true);	  
-	  } else if (phonemeInput == false) {
-		s.speak(this.textfield.value)
-	  }
+	  parseInputText();
     });
     document.getElementById('btndl').addEventListener('click', function (e) {
       e.preventDefault();
+	  
+	  str = document.getElementById('speechinput').value;
+	  if (str.includes("(") && str.includes(")")) {
+		var msg = confirm("Due to limitations of the SamJS library, downloaded WAVs can only be entirely English input or entirely phoneme input. Press OK to continue assuming English input, or Cancel to abort.");
+		if (msg == true) {
+			// Don't do anything
+		} else {
+			return;
+		}
+	  }
+	  
       var s = new SamJs(opts);
 	  if (phonemeInput == true) {
-		s.download(document.getElementById('speechinput').value, true);	  
+		s.download(document.getElementById('speechinput').value, true);
 	  } else if (phonemeInput == false) {
 		s.download(document.getElementById('speechinput').value)
 	  }	  
@@ -66,6 +74,55 @@
 	  }
     });	
   });
+
+function parseInputText() {
+	inText = document.getElementById('speechinput').value;
+	in1 = [];
+	in2 = [];
+	lines = [];
+
+	for(var i=0; i<inText.length; i++) {
+		if (inText[i] === "(") in1.push(i);
+	}
+	for(var i=0; i<inText.length; i++) {
+		if (inText[i] === ")") in2.push(i);
+	}
+	var strIndex = 0;
+	
+	for(var i=0; i<in1.length; i++) {
+		var q = in1[i]+1;
+		var z = in2[i];
+		
+		obj = {phoneme: 0, text: inText.substring(strIndex, in1[i])};
+		lines.push(obj);
+		
+		strIndex = in2[i]+1;
+		
+		obj = {phoneme: 1, text: inText.substring(q,z)};
+		lines.push(obj);
+	}
+	
+	obj = {phoneme: 0, text: inText.substring(strIndex, inText.length)};
+	lines.push(obj);
+	
+	doSpeech();
+	
+}
+
+var line = 0;
+function doSpeech() {
+	if (line===lines.length) {
+		line = 0;
+		return;
+	}
+	var chunk = lines[line++];
+	var s = new SamJs(opts);
+	if (chunk.phoneme == 0) {
+		s.speak(chunk.text).then(doSpeech);
+	} else if (chunk.phoneme == 1) {
+		s.speak(chunk.text, true).then(doSpeech);
+	}
+}
 
 function setOpts(spd, pth, mth, thr) {
 	var newPitch = 255 - pth;
