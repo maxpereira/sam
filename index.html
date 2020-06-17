@@ -57,7 +57,9 @@
 			return;
 		}
 		var msg = confirm("Due to limitations of the SamJS library, downloaded wave files can only be entirely English input or entirely phonetic input. The input can be split into multiple wave files, following this rule. You will have to use another software program such as Audacity to combine them into one continuous audio file.\n\n\nPress OK to continue with the download, or Cancel to abort.");
-		if (msg == false) {
+		if (msg == true) {
+			parseInputText(1);
+		} else if (msg == false) {
 			return;
 		}
 	  } else {
