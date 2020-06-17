@@ -18,6 +18,7 @@
 
   var phonemeInput = false;
   var lines = [];
+  var line = 0;
 
   document.addEventListener('DOMContentLoaded', function() {
     ['speed', 'pitch', 'mouth', 'throat'].forEach(
@@ -44,27 +45,20 @@
     document.getElementById('playground').addEventListener('submit', function (e) {
       e.preventDefault();
       var s = new SamJs(opts);
-	  parseInputText();
+	  parseInputText(0);
     });
     document.getElementById('btndl').addEventListener('click', function (e) {
       e.preventDefault();
 	  
 	  str = document.getElementById('speechinput').value;
 	  if (str.includes("(") && str.includes(")")) {
-		var msg = confirm("Due to limitations of the SamJS library, downloaded WAVs can only be entirely English input or entirely phoneme input. Press OK to continue assuming English input, or Cancel to abort.");
+		var msg = confirm("Due to limitations of the SamJS library, downloaded wave files can only be entirely English input or entirely Phoneme input. The input can be split into multiple wave files, following this rule. You will have to use another software program such as Audacity to combine them into one continuous audio file.\n\n\nPress OK to continue with the download, or Cancel to abort.");
 		if (msg == true) {
-			// Don't do anything
+			parseInputText(1);
 		} else {
 			return;
 		}
-	  }
-	  
-      var s = new SamJs(opts);
-	  if (phonemeInput == true) {
-		s.download(document.getElementById('speechinput').value, true);
-	  } else if (phonemeInput == false) {
-		s.download(document.getElementById('speechinput').value)
-	  }	  
+	  } 
     });
 	document.getElementById('chkBox').addEventListener('click', function (e) {
       if (phonemeInput == false) {
@@ -75,7 +69,7 @@
     });	
   });
 
-function parseInputText() {
+function parseInputText(dlFlag) {
 	inText = document.getElementById('speechinput').value;
 	in1 = [];
 	in2 = [];
@@ -105,11 +99,16 @@ function parseInputText() {
 	obj = {phoneme: 0, text: inText.substring(strIndex, inText.length)};
 	lines.push(obj);
 	
-	doSpeech();
-	
+	if (dlFlag == 0) {
+		line = 0;
+		doSpeech();
+	} else if (dlFlag == 1) {
+		line = 0;
+		doDownload();
+	}
 }
 
-var line = 0;
+
 function doSpeech() {
 	if (line===lines.length) {
 		line = 0;
@@ -121,6 +120,22 @@ function doSpeech() {
 		s.speak(chunk.text).then(doSpeech);
 	} else if (chunk.phoneme == 1) {
 		s.speak(chunk.text, true).then(doSpeech);
+	}
+}
+
+function doDownload() {
+	if (line===lines.length) {
+		line = 0;
+		return;
+	}
+	var chunk = lines[line++];
+	var s = new SamJs(opts);
+	if (chunk.phoneme == 0) {
+		s.download(chunk.text);
+		doDownload();
+	} else if (chunk.phoneme == 1) {
+		s.download(chunk.text, true);
+		doDownload();
 	}
 }
 
