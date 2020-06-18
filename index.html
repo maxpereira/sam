@@ -44,7 +44,9 @@
     document.getElementById('playground').addEventListener('submit', function (e) {
       e.preventDefault();
       var s = new SamJs(opts);
-	  parseInputText(0);
+	  parseInputText();
+	  line = 0;
+	  doSpeech();
     });
     document.getElementById('btndl').addEventListener('click', function (e) {
       e.preventDefault();
@@ -53,22 +55,32 @@
 
 	  if (str.includes("(") && str.includes(")")) {
 	  	if ((str.charAt(0) == '(') && ((str.charAt(str.length-1) == ')'))) {
-			parseInputText(1);
-			return;
+			parseInputText();
+			if (lines.length == 1) {
+				line = 0;
+				doDownload();		
+				return;
+			} else {
+				// Do nothing and continue...
+			}
 		}
 		var msg = confirm("Due to limitations of the SamJS library, downloaded wave files can only be entirely English input or entirely phonetic input. The input can be split into multiple wave files, following this rule. You will have to use another software program such as Audacity to combine them into one continuous audio file.\n\n\nPress OK to continue with the download, or Cancel to abort.");
 		if (msg == true) {
-			parseInputText(1);
+			parseInputText();
+			line = 0;
+			doDownload();
 		} else if (msg == false) {
 			return;
 		}
 	  } else {
-		parseInputText(1);
+		parseInputText();
+		line = 0;
+		doDownload();
 	  }
     });
   });
 
-function parseInputText(dlFlag) {
+function parseInputText() {
 	inText = document.getElementById('speechinput').value;
 	in1 = [];
 	in2 = [];
@@ -87,24 +99,28 @@ function parseInputText(dlFlag) {
 		var z = in2[i];
 		
 		obj = {phoneme: 0, text: inText.substring(strIndex, in1[i])};
-		lines.push(obj);
+		if (obj.text == "") {
+			// Do nothing and continue...
+		} else {
+			lines.push(obj);
+		}
 		
 		strIndex = in2[i]+1;
 		
 		obj = {phoneme: 1, text: inText.substring(q,z)};
-		lines.push(obj);
+		if (obj.text == "") {
+			// Do nothing and continue...
+		} else {
+			lines.push(obj);
+		}
 	}
 	
 	obj = {phoneme: 0, text: inText.substring(strIndex, inText.length)};
-	lines.push(obj);
-	
-	if (dlFlag == 0) {
-		line = 0;
-		doSpeech();
-	} else if (dlFlag == 1) {
-		line = 0;
-		doDownload();
-	}
+	if (obj.text == "") {
+		// Do nothing and continue...
+	} else {
+		lines.push(obj);
+	}			
 }
 
 
