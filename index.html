@@ -124,16 +124,20 @@ function parseInputText() {
 }
 
 
-function doSpeech() {
+function doSpeech(force) {
 	if (line===lines.length) {
 		line = 0;
 		return;
 	}
 	var chunk = lines[line++];
-	var s = new SamJs(opts);
 	if (chunk.phoneme == 0) {
+		var s = new SamJs(opts);
 		s.speak(chunk.text).then(doSpeech);
 	} else if (chunk.phoneme == 1) {
+		var s = new SamJs(opts);
+		s.speak(chunk.text, true).then(doSpeech);
+	} else if (force == "1") {
+		var s = new SamJs({speed: chunk.speed, pitch: chunk.pitch, singmode: true});
 		s.speak(chunk.text, true).then(doSpeech);
 	}
 }
