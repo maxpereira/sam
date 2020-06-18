@@ -51,15 +51,24 @@
 			} else {
 				opts['throat'] = urlParams.get('throat');
 			}
+			
+			linkString = window.location.href.replace(window.location.search,"");
+			
+			history.replaceState({
+			id: 'sam'
+			}, 'SAM: Software Automatic Mouth', linkString);
 		}
-	}  
-  
+	}
+	
+	genLink();
+	
     ['speed', 'pitch', 'mouth', 'throat'].forEach(
       (name) => {
         var e = document.getElementById(name);
         e.onchange = function (e) {
           opts[e.target.id] = 255 - e.target.value;
           document.getElementById(e.target.id + '-lbl').value = 255 - e.target.value;
+		  genLink();
         };
         e.value = 255 - opts[name];
       }
@@ -71,6 +80,7 @@
 		  str = e.target.id.slice(0, -4);
           opts[str] = e.target.value;
           document.getElementById(str).value = 255 - e.target.value;
+		  genLink();		  
         };
         e.value = opts[name.slice(0, -4)];
       }
@@ -211,11 +221,22 @@ function setOpts(spd, pth, mth, thr) {
 	opts['throat'] = thr;
 }
 
+
 function genLink() {
-	linkString = window.location.href;
+	/* Disabled for now since Chrome spams entries in the browser history when doing this. Ugh.
+	linkString = window.location.href.replace(window.location.search,"");
 	linkString+="?speed="+opts['speed']+"&pitch="+opts['pitch']+"&mouth="+opts['mouth']+"&throat="+opts['throat']+"&text="+encodeURIComponent(document.getElementById('speechinput').value);
-	console.info(linkString);
-	prompt("Copy and share the below URL to link to this specific phrase and voice.", linkString);
+	history.replaceState({
+    id: 'sam'
+	}, 'SAM: Software Automatic Mouth', linkString);
+	*/
+}
+
+function shareURL() {
+	linkString = window.location.href.replace(window.location.search,"");
+	linkString+="?speed="+opts['speed']+"&pitch="+opts['pitch']+"&mouth="+opts['mouth']+"&throat="+opts['throat']+"&text="+encodeURIComponent(document.getElementById('speechinput').value);
+	
+	prompt("Copy and share the below URL to link to this specific phrase and voice.", linkString);	
 }
 </script>
 <hr>
@@ -225,9 +246,9 @@ function genLink() {
 <hr>
 <form id="playground">
   <div>
-	<textarea id="speechinput" name="textfield" rows="10" cols="60">(/HEHL8OW.) I am (SAE4M7M,) or Software Automatic Mouth. So nice to (MIY1IYT) you.</textarea>
+	<textarea id="speechinput" onchange="genLink();" name="textfield" rows="10" cols="60">(/HEHL8OW.) I am (SAE4M7M,) or Software Automatic Mouth. So nice to (MIY1IYT) you.</textarea>
 
-    <input type="submit" class="btn hbtn1" name="Text 1" id="btnSubmit" value="Say"><input type="button" class="btn hbtn2" onclick="document.getElementById('speechinput').value='';" value="Clear">
+    <input type="submit" class="btn hbtn1" name="Text 1" id="btnSubmit" value="Say"><input type="button" class="btn hbtn2" onclick="clearPg();" value="Clear">
   <hr>
 	<label for="speed" class="sliderLbl">Speed</label>	
     <input type="range" id="speed" min="0" max="254" />
@@ -251,9 +272,9 @@ function genLink() {
 	<a href="javascript:void(0);" onclick="setOpts(82, 32, 145, 145)">Little Old Lady</a> | 
 	<a href="javascript:void(0);" onclick="setOpts(100, 64, 150, 200)">Extra-Terrestrial</a>
 	<hr>
-	<input type="button" class="btn fbtn" onclick="setOpts(72, 64, 128, 128);" value="Reset to Default">
+	<input type="button" class="btn fbtn" onclick="setOpts(72, 64, 128, 128);genLink();" value="Reset to Default">
 	<input type="button" class="btn fbtn" id="btndl" value="Download WAV">
-	<input type="button" class="btn fbtn" id="btnUrl" onclick="genLink();" value="Share URL">
+	<input type="button" class="btn fbtn" id="btnUrl" onclick="shareURL();" value="Share URL">
 </center>
 <hr>
 <div id="footer">
