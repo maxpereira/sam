@@ -18,8 +18,42 @@
 
   var lines = [];
   var line = 0;
+  
+  const queryString = window.location.search;
+  const urlParams = new URLSearchParams(queryString);
 
   document.addEventListener('DOMContentLoaded', function() {
+  
+	if (queryString != "") {
+		if (urlParams.get('speed') && urlParams.get('pitch') && urlParams.get('mouth') && urlParams.get('throat')) {
+			document.getElementById('speechinput').value = urlParams.get('text');
+
+			if (urlParams.get('speed') > 255 || urlParams.get('speed') < 1 || isNaN(urlParams.get('speed'))) {
+			
+			} else {
+				opts['speed'] = urlParams.get('speed');
+			}
+			
+			if (urlParams.get('pitch') > 255 || urlParams.get('pitch') < 0 || isNaN(urlParams.get('pitch'))) {
+			
+			} else {
+				opts['pitch'] = urlParams.get('pitch');
+			}
+			
+			if (urlParams.get('mouth') > 255 || urlParams.get('mouth') < 0 || isNaN(urlParams.get('mouth'))) {
+			
+			} else {
+				opts['mouth'] = urlParams.get('mouth');
+			}
+
+			if (urlParams.get('throat') > 255 || urlParams.get('throat') < 0 || isNaN(urlParams.get('throat'))) {
+			
+			} else {
+				opts['throat'] = urlParams.get('throat');
+			}
+		}
+	}  
+  
     ['speed', 'pitch', 'mouth', 'throat'].forEach(
       (name) => {
         var e = document.getElementById(name);
@@ -176,6 +210,13 @@ function setOpts(spd, pth, mth, thr) {
 	document.getElementById('throat-lbl').value = thr;
 	opts['throat'] = thr;
 }
+
+function genLink() {
+	linkString = window.location.href;
+	linkString+="?speed="+opts['speed']+"&pitch="+opts['pitch']+"&mouth="+opts['mouth']+"&throat="+opts['throat']+"&text="+encodeURIComponent(document.getElementById('speechinput').value);
+	console.info(linkString);
+	prompt("Copy and share the below URL to link to this specific phrase and voice.", linkString);
+}
 </script>
 <hr>
 <center>
@@ -186,7 +227,7 @@ function setOpts(spd, pth, mth, thr) {
   <div>
 	<textarea id="speechinput" name="textfield" rows="10" cols="60">(/HEHL8OW.) I am (SAE4M7M,) or Software Automatic Mouth. So nice to (MIY1IYT) you.</textarea>
 
-    <input type="submit" class="btn hbtn1" name="Text 1" value="Say"><input type="button" class="btn hbtn2" onclick="document.getElementById('speechinput').value='';" value="Clear">
+    <input type="submit" class="btn hbtn1" name="Text 1" id="btnSubmit" value="Say"><input type="button" class="btn hbtn2" onclick="document.getElementById('speechinput').value='';" value="Clear">
   <hr>
 	<label for="speed" class="sliderLbl">Speed</label>	
     <input type="range" id="speed" min="0" max="254" />
@@ -211,7 +252,8 @@ function setOpts(spd, pth, mth, thr) {
 	<a href="javascript:void(0);" onclick="setOpts(100, 64, 150, 200)">Extra-Terrestrial</a>
 	<hr>
 	<input type="button" class="btn fbtn" onclick="setOpts(72, 64, 128, 128);" value="Reset to Default">
-	<input type="button" class="btn fbtn" id="btndl" onclick="dlFlag = true;" value="Download WAV">
+	<input type="button" class="btn fbtn" id="btndl" value="Download WAV">
+	<input type="button" class="btn fbtn" id="btnUrl" onclick="genLink();" value="Share URL">
 </center>
 <hr>
 <div id="footer">
